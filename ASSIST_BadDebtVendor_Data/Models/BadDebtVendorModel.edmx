@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ASSIST_Bad_Debt_Vendor_MgmtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bad_debt_placement_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="vendor" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="dateSent" Type="datetime" />
+          <Property Name="fileName" Type="varchar" MaxLength="50" />
+          <Property Name="dateCreated" Type="datetime" Nullable="false" />
+          <Property Name="createdBy" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bad_debt_placements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="master" Type="int" Nullable="false" />
+          <Property Name="chsEntity" Type="varchar" MaxLength="4" />
+          <Property Name="accountNbr" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="coid" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="patName" Type="varchar" MaxLength="50" />
+          <Property Name="patDOB" Type="date" />
+          <Property Name="serviceDate" Type="date" />
+          <Property Name="originalBalance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="primaryIns" Type="varchar" MaxLength="50" />
+          <Property Name="secondaryIns" Type="varchar" MaxLength="50" />
+          <Property Name="tertiaryIns" Type="varchar" MaxLength="50" />
+          <Property Name="guarName" Type="varchar" MaxLength="50" />
+          <Property Name="guarDOB" Type="date" />
+          <Property Name="guarSSN" Type="varchar" MaxLength="9" />
+          <Property Name="guarPhone" Type="varchar" MaxLength="15" />
+          <Property Name="guarCell" Type="varchar" MaxLength="15" />
+          <Property Name="guarAddress" Type="varchar" MaxLength="25" />
+          <Property Name="guarCity" Type="varchar" MaxLength="25" />
+          <Property Name="guarState" Type="varchar" MaxLength="2" />
+          <Property Name="guarZip" Type="varchar" MaxLength="10" />
+          <Property Name="guarOccupation" Type="varchar" MaxLength="50" />
+          <Property Name="guarEmployer" Type="varchar" MaxLength="50" />
+          <Property Name="guarEmpPhone" Type="varchar" MaxLength="10" />
+          <Property Name="guarEmail" Type="varchar" MaxLength="50" />
+          <Property Name="placementBalance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="firstLetterDate" Type="date" />
+          <Property Name="lastLetterDate" Type="date" />
+          <Property Name="dateCreated" Type="datetime" Nullable="false" />
+          <Property Name="createdBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="dateModified" Type="datetime" />
+          <Property Name="modifiedBy" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK_bad_debt_placements_bad_debt_placement_master">
+          <End Role="bad_debt_placement_master" Type="Self.bad_debt_placement_master" Multiplicity="1" />
+          <End Role="bad_debt_placements" Type="Self.bad_debt_placements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bad_debt_placement_master">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bad_debt_placements">
+              <PropertyRef Name="master" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ASSIST_Bad_Debt_Vendor_MgmtModelStoreContainer">
+          <EntitySet Name="bad_debt_placement_master" EntityType="Self.bad_debt_placement_master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bad_debt_placements" EntityType="Self.bad_debt_placements" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_bad_debt_placements_bad_debt_placement_master" Association="Self.FK_bad_debt_placements_bad_debt_placement_master">
+            <End Role="bad_debt_placement_master" EntitySet="bad_debt_placement_master" />
+            <End Role="bad_debt_placements" EntitySet="bad_debt_placements" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ASSIST_Bad_Debt_Vendor_MgmtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bad_debt_placement_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="vendor" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dateSent" Type="DateTime" Precision="3" />
+          <Property Name="fileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="createdBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="bad_debt_placements" Relationship="Self.FK_bad_debt_placements_bad_debt_placement_master" FromRole="bad_debt_placement_master" ToRole="bad_debt_placements" />
+        </EntityType>
+        <EntityType Name="bad_debt_placements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="master" Type="Int32" Nullable="false" />
+          <Property Name="chsEntity" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="accountNbr" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="coid" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="patDOB" Type="DateTime" Precision="0" />
+          <Property Name="serviceDate" Type="DateTime" Precision="0" />
+          <Property Name="originalBalance" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="primaryIns" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="secondaryIns" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tertiaryIns" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="guarName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="guarDOB" Type="DateTime" Precision="0" />
+          <Property Name="guarSSN" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="guarPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="guarCell" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="guarAddress" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="guarCity" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="guarState" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="guarZip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="guarOccupation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="guarEmployer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="guarEmpPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="guarEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="placementBalance" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="firstLetterDate" Type="DateTime" Precision="0" />
+          <Property Name="lastLetterDate" Type="DateTime" Precision="0" />
+          <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="createdBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dateModified" Type="DateTime" Precision="3" />
+          <Property Name="modifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="bad_debt_placement_master" Relationship="Self.FK_bad_debt_placements_bad_debt_placement_master" FromRole="bad_debt_placements" ToRole="bad_debt_placement_master" />
+        </EntityType>
+        <Association Name="FK_bad_debt_placements_bad_debt_placement_master">
+          <End Role="bad_debt_placement_master" Type="Self.bad_debt_placement_master" Multiplicity="1" />
+          <End Role="bad_debt_placements" Type="Self.bad_debt_placements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bad_debt_placement_master">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bad_debt_placements">
+              <PropertyRef Name="master" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ASSIST_Bad_Debt_Vendor_MgmtEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bad_debt_placement_master" EntityType="Self.bad_debt_placement_master" />
+          <EntitySet Name="bad_debt_placements" EntityType="Self.bad_debt_placements" />
+          <AssociationSet Name="FK_bad_debt_placements_bad_debt_placement_master" Association="Self.FK_bad_debt_placements_bad_debt_placement_master">
+            <End Role="bad_debt_placement_master" EntitySet="bad_debt_placement_master" />
+            <End Role="bad_debt_placements" EntitySet="bad_debt_placements" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ASSIST_Bad_Debt_Vendor_MgmtModelStoreContainer" CdmEntityContainer="ASSIST_Bad_Debt_Vendor_MgmtEntities">
+          <EntitySetMapping Name="bad_debt_placement_master">
+            <EntityTypeMapping TypeName="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_placement_master">
+              <MappingFragment StoreEntitySet="bad_debt_placement_master">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="vendor" ColumnName="vendor" />
+                <ScalarProperty Name="dateSent" ColumnName="dateSent" />
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bad_debt_placements">
+            <EntityTypeMapping TypeName="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_placements">
+              <MappingFragment StoreEntitySet="bad_debt_placements">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="master" ColumnName="master" />
+                <ScalarProperty Name="chsEntity" ColumnName="chsEntity" />
+                <ScalarProperty Name="accountNbr" ColumnName="accountNbr" />
+                <ScalarProperty Name="coid" ColumnName="coid" />
+                <ScalarProperty Name="patName" ColumnName="patName" />
+                <ScalarProperty Name="patDOB" ColumnName="patDOB" />
+                <ScalarProperty Name="serviceDate" ColumnName="serviceDate" />
+                <ScalarProperty Name="originalBalance" ColumnName="originalBalance" />
+                <ScalarProperty Name="primaryIns" ColumnName="primaryIns" />
+                <ScalarProperty Name="secondaryIns" ColumnName="secondaryIns" />
+                <ScalarProperty Name="tertiaryIns" ColumnName="tertiaryIns" />
+                <ScalarProperty Name="guarName" ColumnName="guarName" />
+                <ScalarProperty Name="guarDOB" ColumnName="guarDOB" />
+                <ScalarProperty Name="guarSSN" ColumnName="guarSSN" />
+                <ScalarProperty Name="guarPhone" ColumnName="guarPhone" />
+                <ScalarProperty Name="guarCell" ColumnName="guarCell" />
+                <ScalarProperty Name="guarAddress" ColumnName="guarAddress" />
+                <ScalarProperty Name="guarCity" ColumnName="guarCity" />
+                <ScalarProperty Name="guarState" ColumnName="guarState" />
+                <ScalarProperty Name="guarZip" ColumnName="guarZip" />
+                <ScalarProperty Name="guarOccupation" ColumnName="guarOccupation" />
+                <ScalarProperty Name="guarEmployer" ColumnName="guarEmployer" />
+                <ScalarProperty Name="guarEmpPhone" ColumnName="guarEmpPhone" />
+                <ScalarProperty Name="guarEmail" ColumnName="guarEmail" />
+                <ScalarProperty Name="placementBalance" ColumnName="placementBalance" />
+                <ScalarProperty Name="firstLetterDate" ColumnName="firstLetterDate" />
+                <ScalarProperty Name="lastLetterDate" ColumnName="lastLetterDate" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="dateModified" ColumnName="dateModified" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
