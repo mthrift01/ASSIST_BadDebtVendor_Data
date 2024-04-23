@@ -4,10 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="56d88f3bc3664229b7e17351f814b53f" Name="Diagram1" ZoomLevel="97">
+      <Diagram DiagramId="56d88f3bc3664229b7e17351f814b53f" Name="Diagram1" ZoomLevel="95">
         <EntityTypeShape EntityType="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_placement_master" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_placements" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="ASSIST_Bad_Debt_Vendor_MgmtModel.FK_bad_debt_placements_bad_debt_placement_master" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_transactions" Width="1.5" PointX="5.25" PointY="3.75" />
+        <AssociationConnector Association="ASSIST_Bad_Debt_Vendor_MgmtModel.FK_bad_debt_transactions_bad_debt_placements" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

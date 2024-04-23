@@ -40,29 +40,49 @@ namespace ASSIST_BadDebtVendor_Data
             }
         }
         #endregion
-        #region Queryies
+        #region Queries
         #endregion
         #region Updates
-        public List<bad_debt_placements> WritePlacements(List<bad_debt_placements> placements, string vendor, DateTime? dateSent, string file = "")
+        public bad_debt_placement_master CreatePlacementMaster(string vendor)
         {
             try
             {
                 var master = new bad_debt_placement_master
                 {
                     vendor = vendor,
-                    fileName = file,
-                    dateSent = dateSent,
+                    fileName = "",
                     createdBy = Environment.UserName,
                     dateCreated = DateTime.Now
                 };
-                placements.ForEach(x => x.bad_debt_placement_master = master);
                 entityContext.bad_debt_placement_master.Add(master);
+                entityContext.SaveChanges();
+                return master;
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                var entityEx = new EntityValException("Error saving inserting bad_debt_placement_master record.", dbEx);
+                throw dbEx;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<bad_debt_placements> WritePlacements(List<bad_debt_placements> placements)
+        {
+            try
+            {                
+                entityContext.bad_debt_placements.AddRange(placements);
                 entityContext.SaveChanges();
                 return placements;
             }
             catch(DbEntityValidationException dbEx)
             {
-                var entityEx = new EntityValException("Error saving inserting bad_debt_placement_master records.", dbEx);
+                var entityEx = new EntityValException("Error saving inserting bad_debt_placement records.", dbEx);
                 throw dbEx;
             }
             catch (SqlException ex)

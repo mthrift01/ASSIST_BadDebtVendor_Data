@@ -27,5 +27,6 @@ namespace ASSIST_BadDebtVendor_Data.Models
     
         public virtual DbSet<bad_debt_placement_master> bad_debt_placement_master { get; set; }
         public virtual DbSet<bad_debt_placements> bad_debt_placements { get; set; }
+        public virtual DbSet<bad_debt_transactions> bad_debt_transactions { get; set; }
     }
 }

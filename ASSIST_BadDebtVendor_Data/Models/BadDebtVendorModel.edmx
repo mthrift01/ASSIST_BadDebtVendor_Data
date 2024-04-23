@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ASSIST_Bad_Debt_Vendor_MgmtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ASSIST_Bad_Debt_Vendor_MgmtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="bad_debt_placement_master">
           <Key>
             <PropertyRef Name="id" />
@@ -53,6 +53,18 @@
           <Property Name="dateModified" Type="datetime" />
           <Property Name="modifiedBy" Type="varchar" MaxLength="25" />
         </EntityType>
+        <EntityType Name="bad_debt_transactions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="placement_id" Type="int" Nullable="false" />
+          <Property Name="transDate" Type="date" />
+          <Property Name="transAmt" Type="money" />
+          <Property Name="curBal" Type="money" />
+          <Property Name="transCode" Type="varchar" MaxLength="3" />
+          <Property Name="transDesc" Type="varchar" MaxLength="20" />
+        </EntityType>
         <Association Name="FK_bad_debt_placements_bad_debt_placement_master">
           <End Role="bad_debt_placement_master" Type="Self.bad_debt_placement_master" Multiplicity="1" />
           <End Role="bad_debt_placements" Type="Self.bad_debt_placements" Multiplicity="*" />
@@ -65,16 +77,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_bad_debt_transactions_bad_debt_placements">
+          <End Role="bad_debt_placements" Type="Self.bad_debt_placements" Multiplicity="1" />
+          <End Role="bad_debt_transactions" Type="Self.bad_debt_transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bad_debt_placements">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bad_debt_transactions">
+              <PropertyRef Name="placement_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ASSIST_Bad_Debt_Vendor_MgmtModelStoreContainer">
           <EntitySet Name="bad_debt_placement_master" EntityType="Self.bad_debt_placement_master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bad_debt_placements" EntityType="Self.bad_debt_placements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bad_debt_transactions" EntityType="Self.bad_debt_transactions" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_bad_debt_placements_bad_debt_placement_master" Association="Self.FK_bad_debt_placements_bad_debt_placement_master">
             <End Role="bad_debt_placement_master" EntitySet="bad_debt_placement_master" />
             <End Role="bad_debt_placements" EntitySet="bad_debt_placements" />
           </AssociationSet>
+          <AssociationSet Name="FK_bad_debt_transactions_bad_debt_placements" Association="Self.FK_bad_debt_transactions_bad_debt_placements">
+            <End Role="bad_debt_placements" EntitySet="bad_debt_placements" />
+            <End Role="bad_debt_transactions" EntitySet="bad_debt_transactions" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ASSIST_Bad_Debt_Vendor_MgmtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -127,6 +155,7 @@
           <Property Name="dateModified" Type="DateTime" Precision="3" />
           <Property Name="modifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="bad_debt_placement_master" Relationship="Self.FK_bad_debt_placements_bad_debt_placement_master" FromRole="bad_debt_placements" ToRole="bad_debt_placement_master" />
+          <NavigationProperty Name="bad_debt_transactions" Relationship="ASSIST_Bad_Debt_Vendor_MgmtModel.FK_bad_debt_transactions_bad_debt_placements" FromRole="bad_debt_placements" ToRole="bad_debt_transactions" />
         </EntityType>
         <Association Name="FK_bad_debt_placements_bad_debt_placement_master">
           <End Role="bad_debt_placement_master" Type="Self.bad_debt_placement_master" Multiplicity="1" />
@@ -147,7 +176,37 @@
             <End Role="bad_debt_placement_master" EntitySet="bad_debt_placement_master" />
             <End Role="bad_debt_placements" EntitySet="bad_debt_placements" />
           </AssociationSet>
+          <EntitySet Name="bad_debt_transactions" EntityType="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_transactions" />
+          <AssociationSet Name="FK_bad_debt_transactions_bad_debt_placements" Association="ASSIST_Bad_Debt_Vendor_MgmtModel.FK_bad_debt_transactions_bad_debt_placements">
+            <End Role="bad_debt_placements" EntitySet="bad_debt_placements" />
+            <End Role="bad_debt_transactions" EntitySet="bad_debt_transactions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="bad_debt_transactions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="placement_id" Type="Int32" Nullable="false" />
+          <Property Name="transDate" Type="DateTime" Precision="0" />
+          <Property Name="transAmt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="curBal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="transCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="transDesc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="bad_debt_placements" Relationship="ASSIST_Bad_Debt_Vendor_MgmtModel.FK_bad_debt_transactions_bad_debt_placements" FromRole="bad_debt_transactions" ToRole="bad_debt_placements" />
+        </EntityType>
+        <Association Name="FK_bad_debt_transactions_bad_debt_placements">
+          <End Type="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_placements" Role="bad_debt_placements" Multiplicity="1" />
+          <End Type="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_transactions" Role="bad_debt_transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bad_debt_placements">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bad_debt_transactions">
+              <PropertyRef Name="placement_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -201,6 +260,19 @@
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="dateModified" ColumnName="dateModified" />
                 <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bad_debt_transactions">
+            <EntityTypeMapping TypeName="ASSIST_Bad_Debt_Vendor_MgmtModel.bad_debt_transactions">
+              <MappingFragment StoreEntitySet="bad_debt_transactions">
+                <ScalarProperty Name="transDesc" ColumnName="transDesc" />
+                <ScalarProperty Name="transCode" ColumnName="transCode" />
+                <ScalarProperty Name="curBal" ColumnName="curBal" />
+                <ScalarProperty Name="transAmt" ColumnName="transAmt" />
+                <ScalarProperty Name="transDate" ColumnName="transDate" />
+                <ScalarProperty Name="placement_id" ColumnName="placement_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

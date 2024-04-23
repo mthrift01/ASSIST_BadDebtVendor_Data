@@ -14,6 +14,12 @@ namespace ASSIST_BadDebtVendor_Data.Models
     
     public partial class bad_debt_placements
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public bad_debt_placements()
+        {
+            this.bad_debt_transactions = new HashSet<bad_debt_transactions>();
+        }
+    
         public int id { get; set; }
         public int master { get; set; }
         public string chsEntity { get; set; }
@@ -48,5 +54,7 @@ namespace ASSIST_BadDebtVendor_Data.Models
         public string modifiedBy { get; set; }
     
         public virtual bad_debt_placement_master bad_debt_placement_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<bad_debt_transactions> bad_debt_transactions { get; set; }
     }
 }
